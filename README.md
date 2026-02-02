@@ -488,7 +488,7 @@ git push
 
 ## 📧 Contact
 
-**Muhammad Hassan Naeem**  
+**Hassan Naeem**  
 Concordia University  
 Computer Vision Course  
 
