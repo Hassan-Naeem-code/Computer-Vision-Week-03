@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -61,9 +61,8 @@ target-version = ['py38', 'py39', 'py310', 'py311']
 profile = "black"
 line_length = 88
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["src", "src.*"]
+[tool.setuptools]
+packages = ["src", "src.data", "src.models", "src.training", "src.utils"]
 
 [tool.mypy]
 python_version = "3.8"
