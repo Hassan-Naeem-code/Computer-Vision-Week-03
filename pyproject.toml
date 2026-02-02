@@ -53,10 +53,6 @@ dev = [
 [project.scripts]
 train-cnn = "src.main:main"
 
-[tool.setuptools]
-packages = ["src", "src.data", "src.models", "src.training", "src.utils"]
-package-dir = {"" = "."}
-
 [tool.black]
 line-length = 88
 target-version = ['py38', 'py39', 'py310', 'py311']
