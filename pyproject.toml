@@ -63,6 +63,7 @@ line_length = 88
 
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["src", "src.*"]
 
 [tool.mypy]
 python_version = "3.8"
