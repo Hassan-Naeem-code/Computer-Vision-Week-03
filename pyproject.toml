@@ -7,6 +7,7 @@ name = "urban-scene-cnn"
 version = "1.0.0"
 description = "Convolutional Neural Network for Urban Scene Classification using MIT Places Dataset"
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.8"
 authors = [
     {name = "Muhammad Hassan Naeem", email = "hassan@example.com"}
@@ -15,7 +16,6 @@ keywords = ["deep-learning", "cnn", "computer-vision", "pytorch"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -53,6 +53,10 @@ dev = [
 [project.scripts]
 train-cnn = "src.main:main"
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
 [tool.black]
 line-length = 88
 target-version = ['py38', 'py39', 'py310', 'py311']
@@ -60,9 +64,6 @@ target-version = ['py38', 'py39', 'py310', 'py311']
 [tool.isort]
 profile = "black"
 line_length = 88
-
-[tool.setuptools]
-packages = ["src", "src.data", "src.models", "src.training", "src.utils"]
 
 [tool.mypy]
 python_version = "3.8"
