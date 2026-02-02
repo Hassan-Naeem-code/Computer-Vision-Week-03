@@ -36,6 +36,8 @@ jobs:
         mypy src/ --ignore-missing-imports || true
 
     - name: Run tests with pytest
+      env:
+        PYTHONPATH: ${{ github.workspace }}
       run: |
         pytest tests/ -v --cov=src --cov-report=xml
 
