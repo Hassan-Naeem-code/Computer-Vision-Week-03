@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Setup configuration for the urban-scene-cnn package."""
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="urban-scene-cnn",
     version="1.0.0",
-    packages=find_packages(include=["src", "src.*"]),
-    package_dir={"": "."},
+    packages=["src", "src.data", "src.models", "src.training", "src.utils"],
     python_requires=">=3.8",
     install_requires=[
         "torch>=2.0.0",
