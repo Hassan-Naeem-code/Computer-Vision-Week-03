@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup(
     name="urban-scene-cnn",
     version="1.0.0",
-    packages=find_packages(where="."),
+    packages=find_packages(include=["src", "src.*"]),
     package_dir={"": "."},
     python_requires=">=3.8",
     install_requires=[
