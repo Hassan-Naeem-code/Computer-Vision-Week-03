@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
@@ -38,9 +40,8 @@ jobs:
         mypy src/ --ignore-missing-imports || true
 
     - name: Run tests with pytest
-      env:
-        PYTHONPATH: ${{ github.workspace }}
       run: |
+        echo "PYTHONPATH=$PYTHONPATH"
         pytest tests/ -v --cov=src --cov-report=xml
 
     - name: Upload coverage reports
