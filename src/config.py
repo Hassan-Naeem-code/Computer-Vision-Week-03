@@ -16,6 +16,7 @@ class DatasetConfig:
     path: str = "./data/MIT_Places_Urban_Subset"
     image_size: int = 128
     num_classes: int = 5
+    download: bool = False
     train_ratio: float = 0.7
     val_ratio: float = 0.15
     test_ratio: float = 0.15
@@ -52,6 +53,9 @@ class TrainingConfig:
     learning_rate: float = 0.001
     optimizer: str = "adam"
     loss_function: str = "crossentropyloss"
+    lr_scheduler: str = "none"
+    lr_decay_step: int = 5
+    lr_decay_factor: float = 0.1
     early_stopping: bool = False
     patience: int = 10
     save_frequency: int = 5
@@ -71,6 +75,11 @@ class LoggingConfig:
     level: str = "INFO"
     output_dir: str = "./outputs"
     save_plots: bool = True
+    plot_types: list = None
+
+    def __post_init__(self):
+        if self.plot_types is None:
+            self.plot_types = ["training_history", "confusion_matrix", "sample_predictions"]
 
 
 @dataclass
