@@ -38,8 +38,10 @@ jobs:
         mypy src/ --ignore-missing-imports || true
 
     - name: Run tests with pytest
+      env:
+        PYTHONPATH: ${{ github.workspace }}
       run: |
-        PYTHONPATH=. pytest tests/ -v --cov=src --cov-report=xml
+        pytest tests/ -v --cov=src --cov-report=xml
 
     - name: Upload coverage reports
       uses: codecov/codecov-action@v3
