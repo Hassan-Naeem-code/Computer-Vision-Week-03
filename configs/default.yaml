@@ -1,0 +1,74 @@
+# Configuration file for Urban Scene CNN
+
+# Dataset settings
+dataset:
+  path: "./data/MIT_Places_Urban_Subset"
+  image_size: 128
+  num_classes: 5
+  download: false
+  
+  # Data split ratios
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  
+  # Normalization (ImageNet standard)
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]
+
+# Model architecture
+model:
+  name: "UrbanSceneCNN"
+  conv_filters: [32, 64, 128]
+  fc_hidden: 512
+  dropout_conv: 0.25
+  dropout_fc: 0.5
+  use_batch_norm: true
+
+# Training hyperparameters
+training:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: "adam"
+  loss_function: "crossentropyloss"
+  
+  # Learning rate scheduling
+  lr_scheduler: "none"  # "step", "exponential", "cosine", "none"
+  lr_decay_step: 5
+  lr_decay_factor: 0.1
+  
+  # Early stopping
+  early_stopping: false
+  patience: 10
+  
+  # Checkpoint settings
+  save_frequency: 5  # Save every N epochs
+  checkpoint_dir: "./checkpoints"
+
+# Validation and evaluation
+validation:
+  frequency: 1  # Validate every N epochs
+  metrics: ["accuracy", "loss", "precision", "recall"]
+
+# Device configuration
+device:
+  type: "auto"  # "cuda", "cpu", or "auto"
+  mixed_precision: false
+
+# Logging and output
+logging:
+  level: "INFO"  # "DEBUG", "INFO", "WARNING", "ERROR"
+  output_dir: "./outputs"
+  save_plots: true
+  plot_types: ["training_history", "confusion_matrix", "sample_predictions"]
+
+# Experiment tracking
+experiment:
+  name: "urban_scene_cnn_v1"
+  description: "CNN for classifying urban scenes"
+  tags: ["cnn", "image-classification", "pytorch"]
+  use_wandb: false  # Weights & Biases integration
+  
+# Random seed for reproducibility
+random_seed: 42

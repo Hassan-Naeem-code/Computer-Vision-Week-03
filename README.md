@@ -1,20 +1,23 @@
-# Week 3 Assignment: Neural Network Models for Urban Scene Classification
+# Urban Scene CNN - Industry Standard Implementation
 
 **Author:** Muhammad Hassan Naeem  
 **Course:** Computer Vision - Concordia University  
-**Date:** February 1, 2026
+**Date:** February 1, 2026  
+**Version:** 1.0.0
 
 ## 📌 Project Overview
 
-This project implements a **Convolutional Neural Network (CNN)** for classifying urban scenes using the MIT Places dataset. The model uses advanced techniques including **Batch Normalization** and **Dropout** for improved performance and generalization.
+A production-ready **Convolutional Neural Network (CNN)** for classifying urban scenes using the MIT Places dataset. Built following industry best practices with modular architecture, comprehensive testing, logging, and configuration management.
 
-## 🎯 Objectives
-
-✅ Implement a CNN for urban scene classification  
-✅ Use MIT Places dataset (subset focusing on urban environments)  
-✅ Train, evaluate, and optimize the model  
-✅ Visualize results and model performance  
-✅ Complete GitHub integration and documentation
+### Key Features
+- ✅ **Modular Architecture**: Separated concerns with clean package structure
+- ✅ **Advanced CNN**: Batch Normalization + Dropout for regularization
+- ✅ **Configuration Management**: YAML-based config with environment variables
+- ✅ **Logging System**: Comprehensive logging with file & console handlers
+- ✅ **Type Hints**: Full type annotations for better IDE support
+- ✅ **Testing**: Unit tests for data, models, and training
+- ✅ **CI/CD**: GitHub Actions workflow for automated testing
+- ✅ **Documentation**: Extensive docstrings and inline comments
 
 ## 🛠️ Technologies Used
 
@@ -29,25 +32,57 @@ This project implements a **Convolutional Neural Network (CNN)** for classifying
 ## 📁 Project Structure
 
 ```
-Assignment03/Code/
+urban-scene-cnn/
 │
-├── urban_scene_cnn.py       # Main implementation file
-├── requirements.txt         # Python dependencies
-├── README.md               # Project documentation
+├── src/                           # Source code package
+│   ├── __init__.py
+│   ├── main.py                   # Entry point for training
+│   ├── config.py                 # Configuration management
+│   │
+│   ├── data/                     # Data loading and preprocessing
+│   │   ├── __init__.py
+│   │   ├── dataset.py            # Dataset loading utilities
+│   │   └── transforms.py         # Image transformations
+│   │
+│   ├── models/                   # Neural network architectures
+│   │   ├── __init__.py
+│   │   ├── base.py               # Base model class
+│   │   └── cnn.py                # UrbanSceneCNN implementation
+│   │
+│   ├── training/                 # Training pipeline
+│   │   ├── __init__.py
+│   │   ├── trainer.py            # Trainer class
+│   │   └── utils.py              # Training utilities
+│   │
+│   └── utils/                    # General utilities
+│       ├── __init__.py
+│       ├── logger.py             # Logging configuration
+│       ├── io.py                 # File I/O utilities
+│       └── visualization.py      # Plotting functions
 │
-├── MIT_Places_Urban_Subset/ # Dataset directory (auto-created if missing)
-│   ├── street/
-│   ├── highway/
-│   ├── building/
-│   ├── park/
-│   └── square/
+├── tests/                        # Unit tests
+│   ├── __init__.py
+│   ├── test_dataset.py
+│   ├── test_models.py
+│   └── test_training.py
 │
-└── Output Files (generated after running):
-    ├── sample_images.png         # Sample dataset images
-    ├── training_history.png      # Training/validation curves
-    ├── test_accuracy.png         # Final accuracy plot
-    ├── confusion_matrix.png      # Confusion matrix visualization
-    └── best_model.pth           # Trained model weights
+├── configs/                      # Configuration files
+│   └── default.yaml              # Default configuration
+│
+├── notebooks/                    # Jupyter notebooks for exploration
+│
+├── .github/
+│   └── workflows/
+│       └── tests.yml             # CI/CD pipeline
+│
+├── pyproject.toml                # Modern Python project config
+├── setup.py                      # Package installation config
+├── Makefile                      # Common commands
+├── requirements.txt              # Production dependencies
+├── requirements-dev.txt          # Development dependencies
+├── .env.example                  # Environment variables template
+├── .gitignore                    # Git ignore rules
+└── README.md                     # This file
 ```
 
 ## 🚀 Installation & Setup
@@ -59,132 +94,293 @@ git clone https://github.com/Hassan-Naeem-code/Computer-Vision-Week-03.git
 cd Computer-Vision-Week-03
 ```
 
-### 2. Install Dependencies
+### 2. Create Virtual Environment (Recommended)
 
 ```bash
-pip install -r requirements.txt
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-Or install manually:
+### 3. Install Dependencies
+
+**Option A: Using pip directly**
+```bash
+pip install -e .
+```
+
+**Option B: Using Makefile**
+```bash
+make install
+```
+
+**Option C: For development (with testing tools)**
+```bash
+pip install -e ".[dev]"
+pip install -r requirements-dev.txt
+```
+
+### 4. (Optional) Setup Environment Variables
 
 ```bash
-pip install torch torchvision numpy matplotlib opencv-python scikit-learn seaborn
+cp .env.example .env
+# Edit .env with your preferred settings
 ```
 
-### 3. Dataset Setup
+### 5. Dataset Setup
 
 The code will automatically create a dummy dataset if the MIT Places dataset is not found. For real data:
 
 1. Download MIT Places dataset subset
-2. Organize into folders by class name
-3. Place in `MIT_Places_Urban_Subset/` directory
+2. Organize into folders by class name (street/, highway/, building/, park/, square/)
+3. Place in data/MIT_Places_Urban_Subset/ directory
 
 ## 🏃 Running the Project
 
-Execute the main script:
+### Basic Training
 
 ```bash
-python urban_scene_cnn.py
+python -m src.main
 ```
 
-This will:
-1. Load and preprocess the dataset
-2. Display sample images
-3. Initialize the CNN model
-4. Train the model for 10 epochs
-5. Evaluate on test data
-6. Generate visualization plots
+Or using Make:
+```bash
+make train
+```
+
+### Custom Configuration
+
+```bash
+python -m src.main --config configs/custom.yaml
+```
+
+### Training with Custom Settings
+
+Edit `configs/default.yaml` to customize:
+- Epochs, batch size, learning rate
+- Model architecture (filters, FC units)
+- Dropout rates
+- Data split ratios
+- Output directories
+
+## 🧪 Testing
+
+Run all tests:
+```bash
+make test
+```
+
+Or with pytest directly:
+```bash
+pytest tests/ -v --cov=src
+```
+
+Run specific test file:
+```bash
+pytest tests/test_models.py -v
+```
+
+## 🔍 Code Quality
+
+### Linting
+```bash
+make lint
+```
+
+### Code Formatting
+```bash
+make format
+```
+
+### Type Checking
+```bash
+python -m mypy src/ --ignore-missing-imports
+```
 
 ## 🧠 Model Architecture
 
 ### UrbanSceneCNN
 
-The CNN consists of:
+A clean, modular CNN architecture built with industry best practices:
 
-**Convolutional Blocks (3):**
-- Conv2D → BatchNorm2D → ReLU → MaxPool2D → Dropout2D
-- Increasing filters: 32 → 64 → 128
-
-**Fully Connected Layers:**
-- Flatten → FC(512) → BatchNorm1D → ReLU → Dropout → FC(num_classes)
+**Architecture Overview:**
+```
+Input (B, 3, 128, 128)
+    ↓
+ConvBlock1 (32 filters) → BatchNorm → ReLU → MaxPool2D → Dropout
+    ↓ (B, 32, 64, 64)
+ConvBlock2 (64 filters) → BatchNorm → ReLU → MaxPool2D → Dropout
+    ↓ (B, 64, 32, 32)
+ConvBlock3 (128 filters) → BatchNorm → ReLU → MaxPool2D → Dropout
+    ↓ (B, 128, 16, 16)
+Flatten → (B, 32768)
+    ↓
+FC1 (512) → BatchNorm → ReLU → Dropout
+    ↓ (B, 512)
+FC2 (num_classes)
+    ↓ (B, num_classes)
+Output
+```
 
 **Key Features:**
-- Batch Normalization for stable training
-- Dropout (0.25 for conv, 0.5 for FC) for regularization
-- MaxPooling for spatial dimension reduction
-- Total parameters: ~2.5M (varies by num_classes)
+- **Convolutional Blocks:** Reusable ConvBlock class with Conv2D, BatchNorm, ReLU, MaxPool, Dropout
+- **Batch Normalization:** Stabilizes training and improves convergence
+- **Dropout:** Prevents overfitting (0.25 for conv layers, 0.5 for FC layers)
+- **He Initialization:** Proper weight initialization for ReLU networks
+- **Type-Safe:** Full type hints for better code quality
+- **Modular Design:** Easy to extend and modify
 
-## 📊 Training Configuration
+**Model Statistics:**
+- Total Parameters: ~2.5M (varies by num_classes)
+- Model Size: ~10 MB
+- Training Time: ~5-10 minutes per epoch on GPU
 
-| Hyperparameter | Value |
-|----------------|-------|
-| Batch Size | 32 |
-| Learning Rate | 0.001 |
-| Optimizer | Adam |
-| Loss Function | CrossEntropyLoss |
-| Epochs | 10 |
-| Train/Val/Test Split | 70% / 15% / 15% |
+## ⚙️ Configuration Management
 
-## 📈 Results
+Configuration is managed through YAML files in `configs/` directory.
 
-The model generates the following outputs:
+### Default Configuration (`configs/default.yaml`)
 
-1. **sample_images.png** - Visualization of 6 sample images from dataset
-2. **training_history.png** - Loss and accuracy curves over epochs
-3. **test_accuracy.png** - Final test set performance
-4. **confusion_matrix.png** - Detailed per-class performance
-5. **best_model.pth** - Saved model with best validation accuracy
+```yaml
+dataset:
+  path: "./data/MIT_Places_Urban_Subset"
+  image_size: 128
+  num_classes: 5
+  train_ratio: 0.7
+  val_ratio: 0.15
+  mean: [0.485, 0.456, 0.406]  # ImageNet normalization
+  std: [0.229, 0.224, 0.225]
+
+model:
+  name: "UrbanSceneCNN"
+  conv_filters: [32, 64, 128]
+  fc_hidden: 512
+  dropout_conv: 0.25
+  dropout_fc: 0.5
+  use_batch_norm: true
+
+training:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: "adam"
+  early_stopping: false
+  save_frequency: 5
+  checkpoint_dir: "./checkpoints"
+
+device:
+  type: "auto"  # "cuda", "cpu", or "auto"
+  mixed_precision: false
+
+logging:
+  level: "INFO"
+  output_dir: "./outputs"
+  save_plots: true
+```
+
+### Using Custom Configuration
+
+```bash
+python -m src.main --config configs/my_config.yaml
+```
+
+### Environment Variables
+
+You can override configuration with environment variables in `.env` file:
+
+```bash
+DATASET_PATH=./my_dataset
+BATCH_SIZE=64
+LEARNING_RATE=0.0001
+EPOCHS=20
+```
+
+Copy and customize:
+```bash
+cp .env.example .env
+```
+
+## � Results & Output
+
+The training pipeline generates:
+
+1. **training_history.png** - Loss and accuracy curves
+2. **test_accuracy.png** - Final test set performance
+3. **confusion_matrix.png** - Per-class performance breakdown
+4. **checkpoints/** - Model weights at various epochs
+   - `best_model.pth` - Best performing model
+   - `checkpoint_epoch_*.pth` - Periodic checkpoints
 
 ### Expected Performance
 
-With the dummy dataset:
-- Training progresses normally
+With dummy dataset:
 - Model learns to classify synthetic data
-- Serves as template for real dataset
+- Demonstrates full pipeline functionality
 
-With real MIT Places data:
-- Expected test accuracy: 70-85% (depends on data quality and size)
-- Better performance with more training epochs and data augmentation
+With real MIT Places data (typical):
+- Test Accuracy: 70-85% (depends on data quality/size)
+- Better performance with:
+  - Larger dataset
+  - More training epochs
+  - Data augmentation
+  - Deeper architecture
+  - Transfer learning from pretrained models
 
-## 🔬 Key Implementation Details
+## � Code Organization & Best Practices
 
-### Data Preprocessing
-- Images resized to 128×128
-- Normalized using ImageNet statistics
-- Random train/val/test split with fixed seed
+### Separation of Concerns
 
-### Training Features
-- Automatic best model saving
-- Per-epoch validation
-- Training and validation metrics tracking
-- GPU support (auto-detects CUDA)
+- **`src/data/`** - All data loading and preprocessing logic
+- **`src/models/`** - Model architecture definitions
+- **`src/training/`** - Training loop and utilities
+- **`src/utils/`** - Logging, I/O, visualization, helpers
+- **`tests/`** - Unit tests for each module
 
-### Evaluation
-- Comprehensive test set evaluation
-- Confusion matrix generation
-- Per-class accuracy analysis
+### Code Quality Standards
 
-## 📝 Code Highlights
+- ✅ **Type Hints**: Full type annotations for IDE support and error detection
+- ✅ **Docstrings**: Comprehensive Google-style docstrings
+- ✅ **Logging**: Structured logging instead of print statements
+- ✅ **Error Handling**: Proper exception handling and validation
+- ✅ **Testing**: Unit tests for critical functionality
+- ✅ **Documentation**: Clear comments and usage examples
 
-### Batch Normalization
-Stabilizes training by normalizing layer inputs:
+### Key Design Patterns
+
+1. **Modular Architecture**: Each component is independent and testable
+2. **Configuration Management**: Externalized config using YAML
+3. **Factory Pattern**: Model and optimizer creation
+4. **Context Managers**: Proper resource management
+5. **Logging Best Practices**: Hierarchical logging with file/console handlers
+
+### Example: Using the Trainer
+
 ```python
-self.bn1 = nn.BatchNorm2d(32)
-```
+from src.training import Trainer
+from src.models import UrbanSceneCNN
+import torch.nn as nn
+import torch.optim as optim
 
-### Dropout Regularization
-Prevents overfitting by randomly dropping connections:
-```python
-self.dropout1 = nn.Dropout2d(0.25)  # For conv layers
-self.dropout4 = nn.Dropout(0.5)     # For FC layers
-```
+# Initialize components
+model = UrbanSceneCNN(num_classes=5)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-### Data Augmentation (Future Enhancement)
-Can add to transforms:
-```python
-transforms.RandomHorizontalFlip(),
-transforms.RandomRotation(10),
-transforms.ColorJitter(brightness=0.2, contrast=0.2)
+# Create trainer
+trainer = Trainer(
+    model=model,
+    train_loader=train_loader,
+    val_loader=val_loader,
+    criterion=criterion,
+    optimizer=optimizer,
+    device=device,
+    checkpoint_dir="./checkpoints"
+)
+
+# Train model
+history = trainer.fit(epochs=10, save_frequency=5)
+
+# Load best model
+trainer.load_checkpoint("./checkpoints/best_model.pth")
 ```
 
 ## 🎥 Video Walkthrough Topics
@@ -209,21 +405,57 @@ When recording your video (5-7 minutes), cover:
    - Potential improvements
    - Real-world applications
 
-## 🚀 Potential Improvements
+## 🚀 Potential Enhancements
 
-1. **Data Augmentation** - Add random transforms for better generalization
-2. **Learning Rate Scheduling** - Reduce LR when validation plateaus
-3. **Deeper Architecture** - Add more convolutional blocks
-4. **Transfer Learning** - Use pretrained ResNet/VGG as backbone
-5. **Ensemble Methods** - Combine multiple models
-6. **Early Stopping** - Stop when validation stops improving
+1. **Data Augmentation**
+   - Random crops, rotations, color jitter
+   - MixUp or CutMix augmentation
+
+2. **Advanced Learning Techniques**
+   - Learning rate scheduling (StepLR, CosineAnnealingLR)
+   - Gradient accumulation for larger effective batch size
+   - Mixed precision training with AMP
+
+3. **Transfer Learning**
+   - Use pretrained ResNet/VGG as backbone
+   - Fine-tune on urban scene classification
+
+4. **Model Improvements**
+   - Deeper architectures (ResNet, DenseNet)
+   - Attention mechanisms
+   - Ensemble methods
+
+5. **Experiment Tracking**
+   - Weights & Biases integration
+   - MLflow for hyperparameter tracking
+   - TensorBoard for visualization
+
+6. **Model Deployment**
+   - ONNX export for inference
+   - TorchScript for deployment
+   - REST API with FastAPI
+   - Docker containerization
 
 ## 📚 References
 
+### Papers
+- [Batch Normalization: Accelerating Deep Network Training](https://arxiv.org/abs/1502.03167)
+- [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html)
+- [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
+
+### Datasets
 - [MIT Places Dataset](http://places2.csail.mit.edu/)
+- [Places365 - Large-scale Scene Database](http://places.csail.mit.edu/)
+
+### Tools & Libraries
 - [PyTorch Documentation](https://pytorch.org/docs/)
-- [Batch Normalization Paper](https://arxiv.org/abs/1502.03167)
-- [Dropout Paper](https://jmlr.org/papers/v15/srivastava14a.html)
+- [torchvision Documentation](https://pytorch.org/vision/stable/)
+- [PyYAML Documentation](https://pyyaml.org/wiki/PyYAMLDocumentation)
+
+### Learning Resources
+- [Deep Learning Specialization (Coursera)](https://www.coursera.org/specializations/deep-learning)
+- [Fast.ai Practical Deep Learning](https://www.fast.ai/)
+- [Stanford CS231n - CNN for Visual Recognition](http://cs231n.stanford.edu/)
 
 ## 📦 Submission Checklist
 
