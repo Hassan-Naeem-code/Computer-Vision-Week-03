@@ -8,7 +8,6 @@ version = "1.0.0"
 description = "Convolutional Neural Network for Urban Scene Classification using MIT Places Dataset"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
 authors = [
     {name = "Muhammad Hassan Naeem", email = "hassan@example.com"}
 ]
@@ -55,7 +54,7 @@ dev = [
 train-cnn = "src.main:main"
 
 [tool.setuptools]
-packages = ["src", "src.data", "src.models", "src.training", "src.utils"]
+packages = ["src"]
 
 [tool.black]
 line-length = 88
