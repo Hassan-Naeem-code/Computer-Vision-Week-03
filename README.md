@@ -1,6 +1,6 @@
 # Urban Scene CNN - Industry Standard Implementation
 
-**Author:** Muhammad Hassan Naeem  
+**Author:** Hassan Naeem  
 **Course:** Computer Vision - Concordia University  
 **Date:** February 1, 2026  
 **Version:** 1.0.0
