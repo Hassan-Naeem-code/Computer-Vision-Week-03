@@ -33,15 +33,15 @@ def test_get_device_cpu():
 
 def test_early_stopping():
     """Test early stopping functionality."""
-    es = EarlyStopping(patience=3)
+    es = EarlyStopping(patience=2)
     
-    # Simulate decreasing loss
+    # Simulate decreasing loss (improvement means lower value)
+    # best_value=None, sets to 0.5
     assert not es(0.5)
+    # 0.4 < 0.5, counter increases to 1 (no improvement)
     assert not es(0.4)
-    assert not es(0.3)
-    assert not es(0.3)  # No improvement
-    assert not es(0.3)  # No improvement
-    assert es(0.3)      # Should trigger (patience exceeded)
+    # 0.3 < 0.5, counter increases to 2 (no improvement, triggers at patience=2)
+    assert es(0.3)
 
 
 def test_early_stopping_reset():

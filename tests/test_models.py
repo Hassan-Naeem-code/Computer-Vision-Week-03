@@ -62,7 +62,8 @@ def test_different_num_classes():
     """Test model with different number of classes."""
     for num_classes in [2, 5, 10, 20]:
         model = UrbanSceneCNN(num_classes=num_classes)
-        x = torch.randn(1, 3, 128, 128)
+        model.eval()
+        x = torch.randn(2, 3, 128, 128)  # batch_size=2 to avoid batch norm issues
         
         with torch.no_grad():
             output = model(x)
